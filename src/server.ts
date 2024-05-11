@@ -14,6 +14,11 @@ const server = new Hono()
     return stream(c, async (stream) => {
       try {
         const { app, router } = await entry.render(c.req.raw);
+        // TODO: Getting closer
+        // if (router.history.location.href != c.req.raw.url) {
+        //   c.redirect(router.history.location.href);
+        //   return;
+        // }
         const { stream: ssrxStream, statusCode } = await drewsRenderToStream({
           app: () => app,
           req: c.req.raw,
