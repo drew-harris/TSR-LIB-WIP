@@ -1,5 +1,7 @@
 import "./__root.css";
 
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+
 import type { ErrorComponentProps } from "@tanstack/react-router";
 import {
   createRootRouteWithContext,
@@ -56,11 +58,11 @@ function RootComponent() {
           <Outlet />
         </div>
 
-        <DehydrateRouter />
-
         <TanStackRouterDevtools />
+        <ReactQueryDevtools />
 
         {bodyTags?.()}
+        <DehydrateRouter />
       </body>
     </html>
   );

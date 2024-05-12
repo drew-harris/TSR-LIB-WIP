@@ -1,14 +1,25 @@
 import { serve } from "@hono/node-server";
+import { trpcServer } from "@hono/trpc-server"; // Deno 'npm:@hono/trpc-server'
+
 import { stream } from "hono/streaming";
 import { serveStatic } from "@hono/node-server/serve-static";
 import { Hono } from "hono";
 
 import * as entry from "~/entry.server.tsx";
 import { drewsRenderToStream } from "./streamer";
+import { appRouter } from "./trpc/app";
 
 const server = new Hono()
   .use("/assets/*", serveStatic({ root: "./dist/public" }))
   .use("/favicon.ico", serveStatic({ path: "./dist/public/favicon.ico" }))
+
+  .use(
+    "/trpc/*",
+    trpcServer({
+      router: appRouter,
+    }),
+  )
+
   .get("*", async (c) => {
     c.header("Content-Type", "text/html; charset=utf-8");
     return stream(c, async (stream) => {

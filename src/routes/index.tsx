@@ -1,41 +1,27 @@
-import { Await, createFileRoute, defer } from '@tanstack/react-router';
-import { Suspense } from 'react';
+import { createFileRoute } from "@tanstack/react-router";
+import { trpc } from "~/utils/trpc";
 
-import { rand, sleep } from '~/utils.ts';
-
-export const Route = createFileRoute('/')({
-  loader: async () => {
-    const deferred = loadData(1000, 'deferred');
-    const critical = await loadData(100, 'critical');
-
-    return {
-      critical,
-      deferred: defer(deferred),
-    };
-  },
+export const Route = createFileRoute("/")({
   component: IndexComponent,
+  loader: async (c) => {
+    // This is important because it populates the server side
+    // Trpc query for hydration.
+    c.context.queryUtils.testRoute.ensureData();
+  },
 });
 
 function IndexComponent() {
-  const { critical, deferred } = Route.useLoaderData();
+  const test = trpc.testRoute.useSuspenseQuery();
 
   return (
     <div>
+      {test[0]}
       <h2>Home</h2>
 
-      <p>This home route simply loads some data (with a simulated delay) and displays it.</p>
-
-      <p>{critical}</p>
-
-      <Suspense fallback={<p>Loading deferred...</p>}>
-        <Await promise={deferred}>{data => <p>{data}</p>}</Await>
-      </Suspense>
+      <p>
+        This home route simply loads some data (with a simulated delay) and
+        displays it.
+      </p>
     </div>
   );
-}
-
-async function loadData(delay: number, name: string) {
-  await sleep(delay);
-
-  return `Home loader - ${name} - random value ${rand()}.`;
 }
