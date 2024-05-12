@@ -10,9 +10,9 @@
 
 // Import Routes
 
-import { Route as rootRoute } from './routes/__root'
-import { Route as IndexImport } from './routes/index'
-import { Route as AdminIndexImport } from './routes/admin.index'
+import { Route as rootRoute } from './../routes/__root'
+import { Route as IndexImport } from './../routes/index'
+import { Route as AdminIndexImport } from './../routes/admin.index'
 
 // Create/Update Routes
 

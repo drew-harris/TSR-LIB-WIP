@@ -10,9 +10,13 @@ export default defineConfig(({ isSsrBuild, command }) => ({
   plugins: [
     tsconfigPaths(),
     react(),
-    TanStackRouterVite(),
+    TanStackRouterVite({
+      generatedRouteTree: "src/internal/routeTree.gen.ts",
+      routesDirectory: "src/routes",
+    }),
     ssrx({
-      routesFile: "src/routeTree.gen.ts",
+      clientEntry: "src/internal/entry.client.tsx",
+      routesFile: "src/internal/routeTree.gen.ts",
       routerAdapter: tanstackRouterAdapter(),
     }),
   ],

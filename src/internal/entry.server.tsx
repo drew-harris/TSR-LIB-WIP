@@ -3,13 +3,13 @@ import { assetsForRequest } from "@ssrx/vite/runtime";
 import { QueryClient, dehydrate } from "@tanstack/react-query";
 import { RouterProvider, createMemoryHistory } from "@tanstack/react-router";
 import { observable } from "@trpc/server/observable";
-import { createRouter } from "~/router.tsx";
-import { trpc } from "./utils/trpc";
+import { createRouter } from "~/internal/router";
 import { TRPCClientError } from "@trpc/client";
 import { callProcedure } from "@trpc/server";
-import { appRouter } from "./trpc/app";
 import { TRPCErrorResponse } from "@trpc/server/unstable-core-do-not-import";
 import { createTRPCQueryUtils } from "@trpc/react-query";
+import { trpc } from "~/internal/trpc";
+import { appRouter } from "~/trpc/app";
 
 const createContext = async () => {
   return {};

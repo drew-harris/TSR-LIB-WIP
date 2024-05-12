@@ -2,9 +2,6 @@ import { createRouter as baseCreateRouter } from "@tanstack/react-router";
 
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { CreateQueryUtils, TRPCQueryUtils } from "@trpc/react-query/shared";
-import { routeTree } from "./routeTree.gen";
-import { AppRouter } from "./trpc/app";
-import { trpc } from "./utils/trpc";
 
 export type RootRouterContext = {
   headTags?: () => React.ReactNode;
@@ -27,7 +24,7 @@ export const createRouter = (opts: {
     routeTree,
     defaultPreload: "intent",
     ...opts,
-    Wrap({ children }) {
+    Wrap({ children }: any) {
       if (!opts.context) {
         return children;
       }
