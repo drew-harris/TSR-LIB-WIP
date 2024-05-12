@@ -9,6 +9,8 @@ import {
   useRouter,
 } from "@tanstack/react-router";
 import { TanStackRouterDevtools } from "@tanstack/router-devtools";
+// @ts-expect-error no types
+import jsesc from "jsesc";
 
 import type { RootRouterContext } from "~/router.ts";
 
@@ -80,6 +82,11 @@ export function DehydrateRouter() {
     payload: router.options.dehydrate?.(),
   };
 
+  const stringified = jsesc(router.options.transformer.stringify(dehydrated), {
+    isScriptContext: true,
+    wrap: true,
+  });
+
   return (
     <script
       id="__TSR_DEHYDRATED__"
@@ -87,7 +94,7 @@ export function DehydrateRouter() {
       dangerouslySetInnerHTML={{
         __html: `
           window.__TSR_DEHYDRATED__ = {
-            data: ${JSON.stringify(router.options.transformer.stringify(dehydrated))}
+            data: ${stringified}
           }
         `,
       }}

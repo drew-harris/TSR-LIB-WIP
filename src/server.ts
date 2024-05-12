@@ -58,7 +58,6 @@ const server = new Hono()
 
         if (response.body) {
           await stream.pipe(response.body).catch((err) => {
-            console.error("Error during stream operation:", err);
             if (!ssrxStream.locked) {
               ssrxStream.cancel();
             }

@@ -9,7 +9,8 @@ void render();
 async function render() {
   const router = createRouter();
 
-  if (!router.state.lastUpdated) {
+  if (!router.state.matches.length) {
+    // do NOT need if not using lazy file routes
     await router.load(); // needed until https://github.com/TanStack/router/issues/1115 is resolved
     void router.hydrate();
   }
