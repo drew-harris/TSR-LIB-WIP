@@ -34,17 +34,9 @@ function RootComponent() {
       </head>
 
       <body className="bg-black text-white">
-        <div className="root-nav">
+        <div className="border-b flex p-5 gap-5">
           <Link to="/" className="[&.active]:font-bold">
             Home
-          </Link>
-
-          <Link to="/lazy-component" className="[&.active]:font-bold">
-            Lazy Component
-          </Link>
-
-          <Link to="/redirect" className="[&.active]:font-bold">
-            Redirect
           </Link>
 
           <Link to="/admin" className="[&.active]:font-bold">
@@ -52,14 +44,16 @@ function RootComponent() {
           </Link>
         </div>
 
-        <hr />
-
-        <div className="root-content">
+        <div className="p-5">
           <Outlet />
         </div>
 
-        <TanStackRouterDevtools />
-        <ReactQueryDevtools />
+        {import.meta.env.DEV && (
+          <>
+            <TanStackRouterDevtools />
+            <ReactQueryDevtools />
+          </>
+        )}
 
         {bodyTags?.()}
         <DehydrateRouter />

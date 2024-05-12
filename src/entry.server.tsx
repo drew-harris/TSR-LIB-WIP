@@ -18,6 +18,11 @@ const createContext = async () => {
 export async function render(req: Request) {
   const assets = await assetsForRequest(req.url);
 
+  const url = new URL(req.url);
+  const memoryHistory = createMemoryHistory({
+    initialEntries: [url.pathname + url.search],
+  });
+
   // Build trpc
   const queryClient = new QueryClient();
   const trpcClient = trpc.createClient({
@@ -60,20 +65,13 @@ export async function render(req: Request) {
       trpcClient,
       queryUtils,
     },
-
+    history: memoryHistory,
     dehydrate: () => {
       return {
         queryClient: dehydrate(queryClient),
       };
     },
   });
-
-  const url = new URL(req.url);
-  const memoryHistory = createMemoryHistory({
-    initialEntries: [url.pathname + url.search],
-  });
-
-  router.update({ history: memoryHistory });
 
   // Wait for critical, non-deferred data
   await router.load();

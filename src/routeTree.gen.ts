@@ -11,22 +11,10 @@
 // Import Routes
 
 import { Route as rootRoute } from './routes/__root'
-import { Route as RedirectImport } from './routes/redirect'
-import { Route as LazyComponentImport } from './routes/lazy-component'
 import { Route as IndexImport } from './routes/index'
 import { Route as AdminIndexImport } from './routes/admin.index'
 
 // Create/Update Routes
-
-const RedirectRoute = RedirectImport.update({
-  path: '/redirect',
-  getParentRoute: () => rootRoute,
-} as any)
-
-const LazyComponentRoute = LazyComponentImport.update({
-  path: '/lazy-component',
-  getParentRoute: () => rootRoute,
-} as any)
 
 const IndexRoute = IndexImport.update({
   path: '/',
@@ -46,14 +34,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexImport
       parentRoute: typeof rootRoute
     }
-    '/lazy-component': {
-      preLoaderRoute: typeof LazyComponentImport
-      parentRoute: typeof rootRoute
-    }
-    '/redirect': {
-      preLoaderRoute: typeof RedirectImport
-      parentRoute: typeof rootRoute
-    }
     '/admin/': {
       preLoaderRoute: typeof AdminIndexImport
       parentRoute: typeof rootRoute
@@ -63,11 +43,6 @@ declare module '@tanstack/react-router' {
 
 // Create and export the route tree
 
-export const routeTree = rootRoute.addChildren([
-  IndexRoute,
-  LazyComponentRoute,
-  RedirectRoute,
-  AdminIndexRoute,
-])
+export const routeTree = rootRoute.addChildren([IndexRoute, AdminIndexRoute])
 
 /* prettier-ignore-end */

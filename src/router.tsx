@@ -14,14 +14,15 @@ export type RootRouterContext = {
   queryUtils: CreateQueryUtils<AppRouter>;
 };
 
-export type CreateRouterParams = Omit<
-  Parameters<typeof baseCreateRouter>[0],
-  "context"
-> & {
+export type CreateRouterParams = Parameters<typeof baseCreateRouter>[0] & {
   context: RootRouterContext;
 };
 
-export const createRouter = (opts: CreateRouterParams) => {
+export const createRouter = (opts: {
+  context: RootRouterContext;
+  // TODO: add more
+  [k: string]: any;
+}) => {
   return baseCreateRouter({
     routeTree,
     defaultPreload: "intent",
