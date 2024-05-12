@@ -29,7 +29,7 @@ function RootComponent() {
         {headTags?.()}
       </head>
 
-      <body>
+      <body className="bg-black text-white">
         <div className="root-nav">
           <Link to="/" className="[&.active]:font-bold">
             Home
