@@ -5,7 +5,7 @@ import { RouterProvider, createMemoryHistory } from "@tanstack/react-router";
 import { observable } from "@trpc/server/observable";
 import { createRouter } from "~/router.tsx";
 import { trpc } from "./utils/trpc";
-import { TRPCClientError, httpBatchLink } from "@trpc/client";
+import { TRPCClientError } from "@trpc/client";
 import { callProcedure } from "@trpc/server";
 import { appRouter } from "./trpc/app";
 import { TRPCErrorResponse } from "@trpc/server/unstable-core-do-not-import";
