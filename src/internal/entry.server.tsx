@@ -11,6 +11,7 @@ import { createTRPCQueryUtils } from "@trpc/react-query";
 import { trpc } from "~/internal/trpc";
 import { appRouter } from "~/trpc/app";
 
+// TODO: Relocate for auth / db (make user accessible)
 const createContext = async () => {
   return {};
 };
@@ -57,21 +58,23 @@ export async function render(req: Request) {
     client: trpcClient,
   });
 
-  const router = createRouter({
-    context: {
-      headTags: () => renderAssets(assets.headAssets),
-      bodyTags: () => renderAssets(assets.bodyAssets),
-      queryClient,
-      trpcClient,
-      queryUtils,
+  const router = createRouter(
+    {
+      context: {
+        headTags: () => renderAssets(assets.headAssets),
+        bodyTags: () => renderAssets(assets.bodyAssets),
+        trpc: queryUtils,
+      },
+      history: memoryHistory,
+      dehydrate: () => {
+        return {
+          queryClient: dehydrate(queryClient),
+        };
+      },
     },
-    history: memoryHistory,
-    dehydrate: () => {
-      return {
-        queryClient: dehydrate(queryClient),
-      };
-    },
-  });
+    queryClient,
+    trpcClient,
+  );
 
   // Wait for critical, non-deferred data
   await router.load();

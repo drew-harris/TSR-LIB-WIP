@@ -1,18 +1,19 @@
 import { publicProcedure, router } from "./base";
-
-type Todo = {
-  id: string;
-  text: string;
-  isComplete: boolean;
-};
-
-const getRandomId = () => Math.random().toString(36).substring(7);
+import { todoRouter } from "./todos";
 
 export const appRouter = router({
-  testRoute: publicProcedure.query(async () => {
+  todos: todoRouter,
+  fastData: publicProcedure.query(async () => {
     // Pause for 350 milliseconds
-    await new Promise((resolve) => setTimeout(resolve, 350));
-    return "Wow Was Here";
+    await new Promise((resolve) => setTimeout(resolve, 250));
+    return "Fast data here";
+  }),
+
+  slowData: publicProcedure.query(async () => {
+    // Pause for 1-2 seconds
+    const timeOut = Math.random() * 1000 + 1000;
+    await new Promise((resolve) => setTimeout(resolve, timeOut));
+    return "Slow data";
   }),
 });
 // Export type router type signature,

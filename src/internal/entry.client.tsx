@@ -29,16 +29,18 @@ async function render() {
     queryClient,
     client: trpcClient,
   });
-  const router = createRouter({
-    context: {
-      queryClient,
-      trpcClient,
-      queryUtils,
+  const router = createRouter(
+    {
+      context: {
+        trpc: queryUtils,
+      },
+      hydrate: (dehydrated: any) => {
+        hydrate(queryClient, dehydrated["queryClient"]);
+      },
     },
-    hydrate: (dehydrated: any) => {
-      hydrate(queryClient, dehydrated["queryClient"]);
-    },
-  });
+    queryClient,
+    trpcClient,
+  );
 
   // THIS DOES NOT WORK IF YOU WANT TO HYDRATE FROM TRPC!
   // if (!router.state.matches.length) {

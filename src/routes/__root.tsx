@@ -35,12 +35,16 @@ function RootComponent() {
 
       <body className="bg-black text-white">
         <div className="border-b flex p-5 gap-5">
-          <Link to="/" className="[&.active]:font-bold">
+          <Link preload="intent" to="/" className="[&.active]:font-bold">
             Home
           </Link>
 
-          <Link to="/admin" className="[&.active]:font-bold">
-            Admin
+          <Link preload="intent" to="/slow" className="[&.active]:font-bold">
+            Slow Data
+          </Link>
+
+          <Link to="/fast" preload="intent" className="[&.active]:font-bold">
+            Fast Data
           </Link>
         </div>
 
@@ -48,12 +52,12 @@ function RootComponent() {
           <Outlet />
         </div>
 
-        {import.meta.env.DEV && (
-          <>
-            <TanStackRouterDevtools />
-            <ReactQueryDevtools />
-          </>
-        )}
+        {/* {import.meta.env.DEV && ( */}
+        {/*   <> */}
+        {/*     <TanStackRouterDevtools /> */}
+        {/*     <ReactQueryDevtools /> */}
+        {/*   </> */}
+        {/* )} */}
 
         {bodyTags?.()}
         <DehydrateRouter />

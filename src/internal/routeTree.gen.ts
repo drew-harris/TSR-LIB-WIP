@@ -11,18 +11,24 @@
 // Import Routes
 
 import { Route as rootRoute } from './../routes/__root'
+import { Route as SlowImport } from './../routes/slow'
+import { Route as FastImport } from './../routes/fast'
 import { Route as IndexImport } from './../routes/index'
-import { Route as AdminIndexImport } from './../routes/admin.index'
 
 // Create/Update Routes
 
-const IndexRoute = IndexImport.update({
-  path: '/',
+const SlowRoute = SlowImport.update({
+  path: '/slow',
   getParentRoute: () => rootRoute,
 } as any)
 
-const AdminIndexRoute = AdminIndexImport.update({
-  path: '/admin/',
+const FastRoute = FastImport.update({
+  path: '/fast',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const IndexRoute = IndexImport.update({
+  path: '/',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -34,8 +40,12 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexImport
       parentRoute: typeof rootRoute
     }
-    '/admin/': {
-      preLoaderRoute: typeof AdminIndexImport
+    '/fast': {
+      preLoaderRoute: typeof FastImport
+      parentRoute: typeof rootRoute
+    }
+    '/slow': {
+      preLoaderRoute: typeof SlowImport
       parentRoute: typeof rootRoute
     }
   }
@@ -43,6 +53,10 @@ declare module '@tanstack/react-router' {
 
 // Create and export the route tree
 
-export const routeTree = rootRoute.addChildren([IndexRoute, AdminIndexRoute])
+export const routeTree = rootRoute.addChildren([
+  IndexRoute,
+  FastRoute,
+  SlowRoute,
+])
 
 /* prettier-ignore-end */
