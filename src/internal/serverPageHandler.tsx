@@ -8,9 +8,8 @@ export const handlePage = async (c: Context) => {
   try {
     const { app, router } = await entry.render(c.req.raw);
     // TODO: Getting closer
-    if (router.state.redirect && router.state.redirect?.to) {
-      console.log("Redirecting to", router.state.redirect?.to);
-      return c.redirect(router.state.redirect?.to);
+    if (router.state.redirect) {
+      return c.redirect(router.state.redirect.href);
     }
     const { stream: ssrxStream, statusCode } = await drewsRenderToStream({
       app: () => app,
