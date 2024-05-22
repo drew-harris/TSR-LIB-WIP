@@ -6,7 +6,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite dev --port 3000",
-    "build": "yarn run build.client && yarn run build.server",
+    "build": "pnpm run build.client && pnpm run build.server",
     "build.client": "NODE_ENV=production vite build",
     "build.server": "NODE_ENV=production vite build --ssr",
     "start": "node dist/server.js --port 3000",
