@@ -20,6 +20,9 @@ export default defineConfig(({ isSsrBuild, command }) => ({
       routerAdapter: tanstackRouterAdapter(),
     }),
   ],
+  ssr: {
+    noExternal: isSsrBuild ? true : undefined,
+  },
   build: {
     rollupOptions: {
       output: {
